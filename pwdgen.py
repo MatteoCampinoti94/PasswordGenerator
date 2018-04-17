@@ -90,8 +90,8 @@ while len(pwds) < total and i < 100000:
         pwd = f'{a2} {a1} {n}'.title()
 
     if pwd not in pwds:
-        if len(pwd.replace(' ', '')) >= length_min:
-            if length_max and len(pwd.replace(' ', '')) <= length_max:
+        if len(pwd)-2 >= length_min:
+            if length_max and len(pwd)-2 <= length_max:
                 pwds.append(pwd)
             elif not length_max:
                 pwds.append(pwd)

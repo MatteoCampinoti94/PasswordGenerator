@@ -101,11 +101,15 @@ if rand_sym:
 
     for i in range(0, len(pwds)):
         pwd = list(pwds[i].replace(' ', '').lower())
-        for j in range(0, secrets.randbelow(len(pwd)//2)+1):
-            x = secrets.choice(range(0, len(pwd)))
+        for j in range(0, secrets.randbelow(len(pwd))+1):
+            while True:
+                x = secrets.choice(range(0, len(pwd)))
+                if random.random() >= 0.5: break
             pwd[j] = secrets.choice(symbols)
-        for j in range(0, secrets.randbelow(len(pwd)//2)+1):
-            x = secrets.choice(range(0, len(pwd)))
+        for j in range(0, secrets.randbelow(len(pwd))+1):
+            while True:
+                x = secrets.choice(range(0, len(pwd)))
+                if random.random() >= 0.5: break
             pwd[j] = pwd[j].upper()
         pwds[i] = ''.join(pwd)
 

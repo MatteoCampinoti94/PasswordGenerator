@@ -1,5 +1,5 @@
 import os, sys
-import random
+import secrets
 from itertools import groupby
 from operator import itemgetter
 
@@ -58,15 +58,15 @@ with open("adjectives.txt", "r") as f:
 pwds = []
 i = 0
 while len(pwds) < total and i < 100000:
-    r = random.randint(0, len(nouns)-1)
+    r = secrets.randbelow(len(nouns))
     n = nouns[r]
 
-    r = random.randint(0, len(adjct)-1)
+    r = secrets.randbelow(len(adjct))
     a = list(adjct.keys())[r]
 
-    r1 = random.randint(0, len(adjct[a])-1)
+    r1 = secrets.randbelow(len(adjct[a]))
     while True:
-        r2 = random.randint(0, len(adjct[a])-1)
+        r2 = secrets.randbelow(len(adjct[a]))
         if r2 != r1: break
 
     if r1 < r2:

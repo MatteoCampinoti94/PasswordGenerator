@@ -3,6 +3,9 @@ import random
 from itertools import groupby
 from operator import itemgetter
 
+if not os.path.isfile('nouns.txt') or not os.path.isfile('adjectives.txt'):
+    sys.exit(1)
+
 with open("nouns.txt", "r") as f:
 	nouns = f.readlines()
 	nouns = [n.lower().strip() for n in nouns if len(n.strip())]

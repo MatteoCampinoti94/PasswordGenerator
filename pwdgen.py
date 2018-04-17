@@ -6,7 +6,8 @@ from operator import itemgetter
 if not os.path.isfile('nouns.txt') or not os.path.isfile('adjectives.txt'):
     sys.exit(1)
 
-length = 8
+length_min = 8
+length_max = 0
 total = 5
 
 if len(sys.argv) > 1:
@@ -14,9 +15,9 @@ if len(sys.argv) > 1:
     while i < len(sys.argv):
         if sys.argv[i] == '-l' and i < len(sys.argv)-1:
             try:
-                length = int(sys.argv[i+1])
+                length_min = int(sys.argv[i+1])
             except:
-                length = 8
+                length_min = 8
             i += 1
         elif sys.argv[i] == '-t' and i < len(sys.argv)-1:
             try:
@@ -24,7 +25,24 @@ if len(sys.argv) > 1:
             except:
                 total = 5
             i += 1
+        elif sys.argv[i] == '-L' and i < len(sys.argv)-1:
+            try:
+                length_max = int(sys.argv[i+1])
+            except:
+                length_max = 0
+            i += 1
+        elif sys.argv[i] == '-ll' and i < len(sys.argv)-1:
+            try:
+                length_min = int(sys.argv[i+1])
+                length_max = int(sys.argv[i+1])
+            except:
+                length_min = 8
+                length_max = 0
+            i += 1
         i += 1
+
+if (length_max != 0 and length_max < length_min) or length_min < 0:
+    sys.exit(2)
 
 with open("nouns.txt", "r") as f:
 	nouns = f.readlines()
@@ -55,8 +73,12 @@ while len(pwds) < total:
     else:
         pwd = f'{adjct[a][r2]} {adjct[a][r1]} {n}'.title()
 
-    if pwd not in pwds and len(pwd.replace(' ', '')) >= length:
-        pwds.append(pwd)
+    if pwd not in pwds:
+        if len(pwd.replace(' ', '')) >= length_min:
+            if length_max and len(pwd.replace(' ', '')) <= length_max:
+                pwds.append(pwd)
+            elif not length_max:
+                pwds.append(pwd)
 
 pwds.sort()
 print('\n'.join(pwds))

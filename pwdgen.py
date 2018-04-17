@@ -56,7 +56,8 @@ with open("adjectives.txt", "r") as f:
 	adjct = {k: list(v) for k,v in groupby(adjct, itemgetter(0))}
 
 pwds = []
-while len(pwds) < total:
+i = 0
+while len(pwds) < total and i < 100000:
     r = random.randint(0, len(nouns)-1)
     n = nouns[r]
 
@@ -79,6 +80,7 @@ while len(pwds) < total:
                 pwds.append(pwd)
             elif not length_max:
                 pwds.append(pwd)
+    i += 1
 
 pwds.sort()
 print('\n'.join(pwds))

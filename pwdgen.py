@@ -6,11 +6,30 @@ from operator import itemgetter
 if not os.path.isfile('nouns.txt') or not os.path.isfile('adjectives.txt'):
     sys.exit(1)
 
+length = 8
+total = 5
+
+if len(sys.argv) > 1:
+    i = 0
+    while i < len(sys.argv):
+        if sys.argv[i] == '-l' and i < len(sys.argv)-1:
+            try:
+                length = int(sys.argv[i+1])
+            except:
+                length = 8
+            i += 1
+        elif sys.argv[i] == '-t' and i < len(sys.argv)-1:
+            try:
+                total = int(sys.argv[i+1])
+            except:
+                total = 5
+            i += 1
+        i += 1
+
 with open("nouns.txt", "r") as f:
 	nouns = f.readlines()
 	nouns = [n.lower().strip() for n in nouns if len(n.strip())]
 	nouns.sort()
-
 
 with open("adjectives.txt", "r") as f:
 	adjct = f.readlines()
@@ -19,7 +38,7 @@ with open("adjectives.txt", "r") as f:
 	adjct = {k: list(v) for k,v in groupby(adjct, itemgetter(0))}
 
 pwds = []
-while len(pwds) < 5:
+while len(pwds) < total:
     r = random.randint(0, len(nouns)-1)
     n = nouns[r]
 
@@ -36,7 +55,7 @@ while len(pwds) < 5:
     else:
         pwd = f'{adjct[a][r2]} {adjct[a][r1]} {n}'.title()
 
-    if pwd not in pwds:
+    if pwd not in pwds and len(pwd.replace(' ', '')) >= length:
         pwds.append(pwd)
 
 pwds.sort()

@@ -73,12 +73,16 @@ while len(pwds) < total and i < 100000:
     a1 = a1[secrets.randbelow(len(a1))]
 
     if not rand_ord:
-        a2 = adjct[list(adjct.keys())[ra]]
-        a2 = a2[secrets.randbelow(len(a2))]
+        while True:
+            a2 = adjct[list(adjct.keys())[ra]]
+            a2 = a2[secrets.randbelow(len(a2))]
+            if a2 != a1: break
     else:
         ra = secrets.randbelow(len(adjct))
-        a2 = adjct[list(adjct.keys())[ra]]
-        a2 = a2[secrets.randbelow(len(a2))]
+        while True:
+            a2 = adjct[list(adjct.keys())[ra]]
+            a2 = a2[secrets.randbelow(len(a2))]
+            if a2 != a1: break
 
     if a1 < a2:
         pwd = f'{a1} {a2} {n}'.title()
